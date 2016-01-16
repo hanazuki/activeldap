@@ -30,8 +30,13 @@ target_adapters = [ENV["ACTIVE_LDAP_TEST_ADAPTER"]]
 target_adapters.each do |adapter|
   ENV["ACTIVE_LDAP_TEST_ADAPTER"] = adapter
   puts "using adapter: #{adapter ? adapter : 'default'}"
-  unless Test::Unit::AutoRunner.run(false, nil, ARGV.dup)
-    succeeded = false
+  begin
+    unless (res = Test::Unit::AutoRunner.run(false, nil, ARGV.dup))
+      succeeded = false
+    end
+    p '!!!!', res, res.class
+  rescue Exception
+    p $!
   end
   puts
 end
