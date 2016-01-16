@@ -8,9 +8,9 @@ rvm:
 sudo: true
 env:
   - JRUBY_OPTS="-Xcext.enabled=true"
-notifications:
-  recipients:
-    - activeldap-commit@googlegroups.com
+# notifications:
+#   recipients:
+#     - activeldap-commit@googlegroups.com
 before_install:
   - travis/before_install.sh
 before_script:
