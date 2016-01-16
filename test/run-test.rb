@@ -36,7 +36,7 @@ target_adapters.each do |adapter|
     end
     p '!!!!', res, res.class
   rescue Exception
-    p $!
+    p $!, $!.backtrace
   end
   puts
 end
