@@ -54,13 +54,14 @@ module Timeout
       # Run the code!
       return block.call
     ensure
-      # Restore old alarm handler since we're done
-      trap(:ALRM, orig_alrm)
       # Make sure the process is dead
       # This may be run twice (trap occurs during execution) so ignore ESRCH
       Process.kill(:TERM, pid) rescue Errno::ESRCH
       # Don't leave zombies
       Process.waitpid(pid) rescue Errno::ECHILD
+
+      # Restore old alarm handler since we're done
+      trap(:ALRM, orig_alrm)
     end
   end
 end # Timeout
