@@ -51,17 +51,25 @@ module Timeout
     end
 
     begin
+      $stderr.puts "!!!!!!!!!!!!!!!!!!! X"
       # Run the code!
       return block.call
+      $stderr.puts "!!!!!!!!!!!!!!!!!!! Y"
     ensure
+      $stderr.puts "!!!!!!!!!!!!!!!!!!! A"
+
       # Make sure the process is dead
       # This may be run twice (trap occurs during execution) so ignore ESRCH
       Process.kill(:TERM, pid) rescue Errno::ESRCH
+      $stderr.puts "!!!!!!!!!!!!!!!!!!! B"
+
       # Don't leave zombies
       Process.waitpid(pid) rescue Errno::ECHILD
+      $stderr.puts "!!!!!!!!!!!!!!!!!!! C"
 
       # Restore old alarm handler since we're done
       trap(:ALRM, orig_alrm)
+      $stderr.puts "!!!!!!!!!!!!!!!!!!! D"
     end
   end
 end # Timeout
